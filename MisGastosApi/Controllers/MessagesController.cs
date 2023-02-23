@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MisGastosApi.Models;
-using MisGastosApi.Services;
+using MisGastosApi.Data.Models;
+using MisGastosApi.Core.Services;
 
 namespace MisGastosApi.Controllers;
 

@@ -1,4 +1,4 @@
-﻿namespace MisGastosApi.Models;
+﻿namespace MisGastosApi.Data.Models;
 
 public class Message
 {

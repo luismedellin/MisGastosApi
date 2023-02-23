@@ -1,4 +1,4 @@
-using MisGastosApi.Services;
+using MisGastosApi.Core.Services;
 using dotenv.net;
 using Microsoft.Net.Http.Headers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -6,6 +6,8 @@ using Microsoft.IdentityModel.Tokens;
 using MisGastosApi.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using MisGastosApi.Middlewares;
+using MisGastosApi.Data.Repositories;
+using MisGastosApi.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +20,18 @@ builder.Host.ConfigureAppConfiguration((configBuilder) =>
 
 // Add services to the container.
 
+#region Libraries Configuration
+builder.Services.AddSingleton<DapperContext>();
+
+#endregion
+#region My Services
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
+builder.Services.AddScoped<IPaymentMethodService, PaymentMethodService>();
 builder.Services.AddScoped<IMessageService, MessageService>();
+#endregion
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddCors(options =>
 {

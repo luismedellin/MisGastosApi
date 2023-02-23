@@ -1,6 +1,6 @@
-﻿using MisGastosApi.Models;
+﻿using MisGastosApi.Data.Models;
 
-namespace MisGastosApi.Services;
+namespace MisGastosApi.Core.Services;
 
 public interface IMessageService
 {
