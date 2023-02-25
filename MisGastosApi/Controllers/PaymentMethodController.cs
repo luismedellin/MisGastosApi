@@ -49,6 +49,26 @@ namespace MisGastosApi.Controllers
             }
         }
 
+        [HttpDelete("{paymentMethodId}")]
+        public async Task<IActionResult> SavePaymentMethod(int paymentMethodId)
+        {
+            var paymentMethod = new PaymentMethodDto
+            {
+                UserId = GetUserName(),
+                PaymentMethodId = paymentMethodId
+            };
+
+            try
+            {
+                await _paymentMethodService.Delete(paymentMethod);
+                return Ok(paymentMethod);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
         private string GetUserName()
         {
             return User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value;

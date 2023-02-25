@@ -64,5 +64,26 @@ namespace MisGastosApi.Data.Repositories
                 dbConnection.Close();
             }
         }
+
+        public async Task Delete(int paymentMethodId)
+        {
+            dbConnection.Open();
+            using var transaction = CreateTransaction();
+            const string sql = @"DELETE FROM PaymentMethod WHERE PaymentMethodId = @paymentMethodId;";
+            try
+            {
+                await (dbConnection.ExecuteAsync(sql, new { paymentMethodId }, transaction));
+                transaction.Commit();
+            }
+            catch (Exception e)
+            {
+                transaction.Rollback();
+                var errorMessage = $@"Error guardando un nuevo método de pago";
+            }
+            finally
+            {
+                dbConnection.Close();
+            }
+        }
     }
 }

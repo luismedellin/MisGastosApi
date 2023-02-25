@@ -6,5 +6,6 @@ namespace MisGastosApi.Data.Repositories
     {
         Task<List<PaymentMethod>> GetPaymentsByUser(string userId);
         Task Save(PaymentMethod paymentMethod);
+        Task Delete(int paymentMethodId);
     }
 }

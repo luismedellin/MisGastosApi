@@ -7,5 +7,6 @@ namespace MisGastosApi.Core.Services
     {
         Task<List<PaymentMethod>> GetPaymentsByUser(string userId);
         Task<PaymentMethod> Save(PaymentMethodDto paymentMethod);
+        Task Delete(PaymentMethodDto paymentMethodDto);
     }
 }

@@ -29,4 +29,24 @@ public class PaymentMethodService: IPaymentMethodService
         await unitOfWork.PaymentMethods.Save(paymentMethod);
         return paymentMethod;
     }
+
+    public async Task Delete(PaymentMethodDto paymentMethodDto)
+    {
+        var (isValid, errorMessage) = await ValidateDeletePaymentMethod(paymentMethodDto);
+        if(!isValid) throw new Exception(errorMessage);
+
+        await unitOfWork.PaymentMethods.Delete(paymentMethodDto.PaymentMethodId.Value);
+    }
+
+    private async Task<(bool, string)> ValidateDeletePaymentMethod(PaymentMethodDto paymentMethodDto)
+    {
+        var userPaymentMethods = await GetPaymentsByUser(paymentMethodDto.UserId);
+        if (!userPaymentMethods.Any(up => up.PaymentMethodId == paymentMethodDto.PaymentMethodId))
+        {
+            return (false, "El usuario no puede borrar el actual método de pago");
+        }
+
+        return (true, string.Empty);
+    }
+
 }
